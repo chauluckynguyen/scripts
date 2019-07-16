@@ -1,4 +1,5 @@
 #!/bin/bash
+# Removes all image (.png) files in a directory
 
 # variables
 
@@ -18,8 +19,8 @@ while true; do
 	read -p "$PROMPT" dir
 
 	if [[ $dir == "done" ]]; then
-					printf "%s\n\n" "Exiting..." "$BEAR_DONE"
-					exit 0
+		printf "%s\n\n" "Exiting..." "$BEAR_DONE"
+		exit 0
 	fi
 
 	printf "%b" "$ORANGE[WARNING]: THIS WILL DELETE ALL SCREENSHOTS FROM THE $dir DIRECTORY."
@@ -28,18 +29,18 @@ while true; do
 	path="$dir/*$IMG_EXT"
 	count=0
 	if [[ $reply =~ ^[Yy]$ ]]; then
-					for file in $path; do
-									if [[ -f "$file" ]]; then 
-										printf  "%s\n" "Removing $file..."
-										rm "$file"
-							  		((count++))
-									else
-													printf "%s\n\n" "No screenshot files exist in $dir directory."
-									fi
-					done
-					printf "%s\n\n" "$count file(s) successfully removed from $dir"
+		for file in $path; do
+			if [[ -f "$file" ]]; then 
+				printf  "%s\n" "Removing $file..."
+				rm "$file"
+				((count++))
+			else
+				printf "%s\n\n" "No screenshot files exist in $dir directory."
+			fi
+		done
+		printf "%s\n\n" "$count file(s) successfully removed from $dir"
 	else 
-					printf "%s\n\n" "Exiting..." "$BEAR_DONE"
-					exit 0
+		printf "%s\n\n" "Exiting..." "$BEAR_DONE"
+		exit 0
 	fi
 done
