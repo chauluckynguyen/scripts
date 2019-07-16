@@ -1,0 +1,45 @@
+#!/bin/bash
+
+# variables
+
+PROMPT="Type in the directory you wish to delete from \
+(for example: /Users/username/Desktop). Otherwise \
+type done to exit: "
+BEAR_START=$'o____o \n( ･ω･) < Let\'s clean your computer! )\n(づ  )づ'
+BEAR_DONE=$'o____o \n( ･ω･) < Goodbye! )\n(づ  )づ'
+ORANGE="\e[38;5;208m"
+IMG_EXT=".png"
+
+# start 
+
+printf "%s\n\n" "$BEAR_START"
+
+while true; do
+	read -p "$PROMPT" dir
+
+	if [[ $dir == "done" ]]; then
+					printf "%s\n\n" "Exiting..." "$BEAR_DONE"
+					exit 0
+	fi
+
+	printf "%b" "$ORANGE[WARNING]: THIS WILL DELETE ALL SCREENSHOTS FROM THE $dir DIRECTORY."
+	read -p $'Are you sure you want to continue? (Y/N): \e[0m' reply
+
+	path="$dir/*$IMG_EXT"
+	count=0
+	if [[ $reply =~ ^[Yy]$ ]]; then
+					for file in $path; do
+									if [[ -f "$file" ]]; then 
+										printf  "%s\n" "Removing $file..."
+										rm "$file"
+							  		((count++))
+									else
+													printf "%s\n\n" "No screenshot files exist in $dir directory."
+									fi
+					done
+					printf "%s\n\n" "$count file(s) successfully removed from $dir"
+	else 
+					printf "%s\n\n" "Exiting..." "$BEAR_DONE"
+					exit 0
+	fi
+done
