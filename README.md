@@ -1,6 +1,6 @@
 # Scripts
 
 ## Table of Contents
-* kurinkuma - Removes image files from directory
+* kurinkuma - Removes screenshots from a directory
 
 
