@@ -4,42 +4,51 @@
 
 # variables
 
-PROMPT="Type in the directory you wish to delete from \
+PROMPT_FILE="What file type do you want remove \
+(for example: .png)? Otherwise, type done to exit: "
+PROMPT_DIR="Type in the directory you wish to delete from \
 (for example: /Users/username/Desktop). Otherwise \
 type done to exit: "
 BEAR_START=$'o____o \n( ･ω･) < Let\'s delete your screenshots! )\n(づ  )づ'
 BEAR_DONE=$'o____o \n( ･ω･) < Goodbye! )\n(づ  )づ'
 ORANGE="\e[38;5;208m"
-SCREENSHOT="Screen"
+IMG_EXT=".png"
 
 # start 
 
 printf "%s\n\n" "$BEAR_START"
 
 while true; do
-	read -p "$PROMPT" dir
+    read -p "$PROMPT_FILE" filetype
 
-	if [[ $dir == "done" ]]; then
-		printf "%s\n\n" "Exiting..." "$BEAR_DONE"
-		exit 0
-	fi
+	if [[ $filetype == "done" ]]; then
+        printf "%s\n\n" "Exiting..." "$BEAR_DONE"
+        exit 0
+    fi
+    
+    read -p "$PROMPT_DIR" dir 
 
-	printf "%b" "$ORANGE[WARNING]: THIS WILL DELETE ALL SCREENSHOTS FROM THE $dir DIRECTORY."
-	read -p $'Are you sure you want to continue? (y/n): \e[0m' reply
+    if [[ $dir == "done" ]]; then
+        printf "%s\n\n" "Exiting..." "$BEAR_DONE"
+        exit 0
+    fi
 
-	path="$dir/$SCREENSHOT*.png"
+    printf "%b" "$ORANGE[WARNING]: THIS WILL DELETE ALL $filetype files FROM THE $dir DIRECTORY."
+    read -p $'Are you sure you want to continue? (y/n): \e[0m' reply
+
+	path="$dir/*$filetype"
 	count=0
 	if [[ $reply =~ ^[Yy]$ ]]; then
-		for file in $path; do
-			if [[ -f "$file" ]]; then 
-				printf  "%s\n" "Removing $file..."
-				rm "$file"
+        for file in $path; do
+            if [[ -f "$file" ]]; then 
+                printf  "%s\n" "Removing $file..."
+                rm "$file"
 				((count++))
 			else
-				printf "%s\n\n" "No screenshots exist in $dir directory."
+				printf "%s\n\n" "No $filetype files exist in the $dir directory."
 			fi
 		done
-		printf "%s\n\n" "$count screenshot(s) successfully removed from $dir."
+		printf "%s\n\n" "$count $filetype file(s) successfully removed from $dir."
 	else 
 		printf "%s\n\n" "Exiting..." "$BEAR_DONE"
 		exit 0
