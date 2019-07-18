@@ -1,6 +1,5 @@
 #!/bin/bash
-# removes all screenshot files in a directory
-# note: only works for filenames starting with "Screen"
+# removes files in a directory
 
 # variables
 
