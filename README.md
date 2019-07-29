@@ -1,6 +1,5 @@
-# Scripts
+# Kumascripts
 
 ## Table of Contents
-* kurinkuma - Removes screenshots from a directory
-
-
+* kurinkuma - Removes files from a directory
+* stockskuma - Prints current stock prices
