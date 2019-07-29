@@ -8,7 +8,7 @@ PROMPT_FILE="What file type do you want remove \
 PROMPT_DIR="Type in the directory you wish to delete from \
 (for example: /Users/username/Desktop). Otherwise \
 type done to exit: "
-BEAR_START=$'o____o \n( ･ω･) < Let\'s delete your screenshots! )\n(づ  )づ'
+BEAR_START=$'o____o \n( ･ω･) < Let\'s delete your files! )\n(づ  )づ'
 BEAR_DONE=$'o____o \n( ･ω･) < Goodbye! )\n(づ  )づ'
 ORANGE="\e[38;5;208m"
 IMG_EXT=".png"
@@ -44,10 +44,10 @@ while true; do
                 rm "$file"
 				((count++))
 			else
-				printf "%s\n\n" "No $filetype files exist in the $dir directory."
+				printf "%s\n" "No $filetype files exist in the $dir directory."
 			fi
 		done
-		printf "%s\n\n" "$count $filetype file(s) successfully removed from $dir."
+		printf "%b\n\n" "\e[32m$count $filetype file(s) successfully removed from $dir. \e[0m"
 	else 
 		printf "%s\n\n" "Exiting..." "$BEAR_DONE"
 		exit 0

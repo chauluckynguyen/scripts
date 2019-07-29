@@ -1,0 +1,21 @@
+#!/bin/bash
+
+BEAR_START=$'o____o \n( ･ω･) < Check today\'s current stock values! )\n(づ  )づ'
+BEAR_DONE=$'o____o \n( ･ω･) < Goodbye! )\n(づ  )づ'
+PROMPT="Enter symbol (for example: AAPL). Type done to quit: "
+
+printf "%s\n\n" "$BEAR_START"
+
+while true; do 
+    read -p "`echo $'\n'`$PROMPT" symbol
+
+    if [[ $symbol == "done" ]]; then
+        printf "\n%s\n" "$BEAR_DONE"
+        exit 0
+    fi
+
+    AV_URL="https://www.alphavantage.co/query?function=TIME_SERIES_INTRADAY&outputsize=compact&symbol=${symbol}&interval=1min&apikey=86LBPG7DHJP1PPMI"
+    output=`curl -# "$AV_URL" | jq '."Time Series (1min)" | to_entries | map_values(.value + {timestamp: .key}) | first'` 
+
+    echo [$output] | jq -r '["TIMESTAMP          ","OPEN    ","CLOSE    "], ["===================","========","======="], (.[] | [.timestamp,."1. open",."4. close"]) | @tsv' 
+done
